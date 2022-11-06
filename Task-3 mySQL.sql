@@ -1,0 +1,38 @@
+create database bharath;
+use bharath;
+
+-- Query1
+create TABLE user(id int primary key,firstName varchar(100) NOT NULL,lastName varchar(100) NOT NULL, age int NOT NULL,salary int NOT NULL);
+Insert into user values(1,'bharath','kumar',20,10000);
+Insert into user values(2,'babji','talari',21,20000);
+Insert into user values(3,'chandu','kota',22,30000);
+Insert into user values(4,'prabhas','raju',23,40000);
+Insert into user values(5,'mahesh','babu',24,50000);
+
+-- Query2
+create TABLE movie(id int NOT NULL,moviename varchar(100) NOT NULL,hero varchar(100) NOT NULL, heroin varchar(100) NOT NULL,ticketprice int NOT NULL,movierating int NOT NULL,foreign key(id) references user(id));
+Insert into movie values(1,'KGF','yash','nidhi',100,4);
+Insert into movie values(2,'KGF2','yash','nidhi',200,5);
+Insert into movie values(3,'RRR','ram','alia',50,3);
+Insert into movie values(4,'RadheShyam','prabhas','pooja hegde',1000,5);
+Insert into movie values(5,'Pushpa','AA','samantha',200,5);
+Insert into movie values(1,'Pushpa','AA','samantha',200,5);
+Insert into movie values(2,'kantara','rishab','pooja',100,10);
+Insert into movie values(1,'kantara','rishab','pooja',100,10);
+Insert into movie values(1,'acharya','ram','pooja hegde',150,10);
+select * from movie;
+
+-- Query3
+select moviename from movie,user  where user.id=2 and user.id=movie.id;
+
+-- Query4
+select distinct moviename from user,movie where user.id=1 and movie.ticketprice>150 and user.id=movie.id;
+
+-- Query5
+select moviename from user,movie where user.id=1 and movierating between 0 and 5 and user.id=movie.id ;
+
+-- Query6
+select distinct moviename from user,movie where user.id =2 and user.id=movie.id and heroin IN(select heroin from movie Group By heroin having count(*)>=2);
+
+-- Query7
+select user.id,sum(ticketprice) as total,avg(ticketprice) as average from user,movie where user.id=1 and user.id=movie.id;
